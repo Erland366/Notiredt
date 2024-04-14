@@ -47,8 +47,6 @@ float sum(float* A, unsigned int N){
     return sum;
 }
 
-
-
 int main(int argc, char**argv) {
     unsigned int N = (argc > 1)?(atoi(argv[1])):1024;
     float *A, *B, *sum_cpu;

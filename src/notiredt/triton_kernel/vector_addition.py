@@ -40,7 +40,17 @@ def vector_addition(A: torch.FloatTensor, B: torch.FloatTensor) -> torch.FloatTe
     return C
 
 
-a = torch.arange(1024).cuda()
-b = torch.arange(1024).cuda()
-c = vector_addition(a, b)
-print(c)
+def main():
+    # verify numerical fidelity
+    torch.manual_seed(2020)
+    vec_size = 8192
+    a = torch.randn(vec_size, device="cuda")
+    b = torch.rand_like(a)
+    torch_res = a + b
+    triton_res = vector_addition(a, b)
+    fidelity_correct = torch.allclose(torch_res, triton_res)
+    print(f"{fidelity_correct = }")
+    print("VectorAdd complete")
+
+if __name__ == "__main__":
+    main()
