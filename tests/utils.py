@@ -3,7 +3,6 @@ Utilities for Testing
 """
 
 import torch
-
 from notiredt.aliases import Device, SequenceOrTensor
 
 

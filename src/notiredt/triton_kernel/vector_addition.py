@@ -52,5 +52,6 @@ def main():
     print(f"{fidelity_correct = }")
     print("VectorAdd complete")
 
+
 if __name__ == "__main__":
     main()

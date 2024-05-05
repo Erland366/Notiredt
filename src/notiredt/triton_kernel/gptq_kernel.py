@@ -1,6 +1,6 @@
+import lovely_tensors as lt
 import torch
 import triton.language as tl
-import lovely_tensors as lt
 
 lt.monkey_patch()
 

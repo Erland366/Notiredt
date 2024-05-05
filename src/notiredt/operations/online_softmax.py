@@ -1,5 +1,5 @@
-import torch
 import lovely_tensors as lt
+import torch
 
 lt.monkey_patch()
 

@@ -1,9 +1,8 @@
-import torch
-
-from torch.utils.benchmark import Timer
 from typing import Callable
-from notiredt.triton_kernel.add import add
-from notiredt.triton_kernel.add import add_torch
+
+import torch
+from notiredt.triton_kernel.add import add, add_torch
+from torch.utils.benchmark import Timer
 
 
 class TritonBenchmark:

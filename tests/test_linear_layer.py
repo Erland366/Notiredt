@@ -2,13 +2,12 @@
 Utilities for Testing
 """
 
+import notiredt
 import pytest
 import torch
 from torch import nn
 from torch.cuda.amp import autocast
 from torch.nn import functional as F
-
-import notiredt
 
 from .utils import assert_close, create_input, create_input_like, default_shapes
 
@@ -28,7 +27,7 @@ def test_linear_layer(
     out_dim: int,
     bias: bool,
     act_func: str | None,
-    input_dtype: bool,
+    input_dtype: torch.dtype,
     amp: bool,
 ) -> None:
     if input_dtype is torch.float16 and not amp:

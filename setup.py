@@ -170,13 +170,13 @@ def get_wheel_url():
     cxx11_abi = str(torch._C._GLIBCXX_USE_CXX11_ABI).upper()
 
     # Determine wheel URL based on CUDA version, torch version, python version and OS
-    wheel_filename = (
-        f"{PACKAGE_NAME}-{notiredt_version}+cu{cuda_version}torch{torch_version}cxx11abi{}"
-    )
+    wheel_filename = f"{PACKAGE_NAME}-{notiredt_version}+cu{cuda_version}torch{torch_version}cxx11abi"
+
     wheel_url = BASE_WHEEL_URL.format(
         tag_name=f"v{notiredt_version}", wheel_name=wheel_filename
     )
     return wheel_url, wheel_filename
+
 
 class CachedWheelsCommand(_bdist_wheel):
     """
@@ -210,6 +210,7 @@ class CachedWheelsCommand(_bdist_wheel):
             print("Precompiled wheel not found. Building from source...")
             super().run()
 
+
 setup(
     name=PACKAGE_NAME,
     version=get_package_version(),
@@ -222,13 +223,13 @@ setup(
             "dist",
             "docs",
             "benchmarks",
-            "notiredt.egg-info"
+            "notiredt.egg-info",
         )
-    )
+    ),
     author="Erland Hilman Fuadi",
     author_email="erland.hilman366@gmail.com",
     description="My best attempt at a C++/CUDA implementation of the NotiReDT algorithm",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url=""
+    url="",
 )

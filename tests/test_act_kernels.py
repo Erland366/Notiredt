@@ -1,9 +1,9 @@
+import notiredt
 import pytest
 import torch
 from torch import nn
 from torch.cuda.amp import autocast
 
-import notiredt
 from .utils import assert_close, create_input, create_input_like, default_shapes
 
 
