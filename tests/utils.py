@@ -77,8 +77,25 @@ def create_input_like(
 ):
     if seed is not None:
         torch.manual_seed(seed)
+    assert isinstance(
+        input_tensor, torch.Tensor
+    ), "Tensor must be a type of torch.Tensor"
 
     return torch.randn_like(input_tensor, requires_grad=requiers_grad)
+
+
+def create_zeros_like(
+    input_tensor: SequenceOrTensor,
+    requiers_grad: bool = False,
+    seed: int | None = 3407,
+):
+    if seed is not None:
+        torch.manual_seed(seed)
+    assert isinstance(
+        input_tensor, torch.Tensor
+    ), "Tensor must be a type of torch.Tensor"
+
+    return torch.zeros_like(input_tensor, requires_grad=requiers_grad)
 
 
 def assert_close(

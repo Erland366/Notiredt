@@ -30,7 +30,7 @@ def apply_act_func(input_tensor, drop_p, seed, offset, act_func, dropout):
         output = sigmoid(input_tensor)
 
     if dropout:
-        pass
+        output = apply_dropout()
     return output
 
 
