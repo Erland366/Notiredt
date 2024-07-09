@@ -1,2 +1,42 @@
 [tool.ruff.lint.per-file-ignores]
 "*__init__.py" = ["F401"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notiredt"
+version = "0.1.13"
+description = "A package for evaluating the performance of language model with Prometheus"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+addopts = [
+  "--color=yes",
+  "--durations=0",
+  "--strict-markers",
+  "--doctest-modules",
+  "-s",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+  "ignore::UserWarning",
+]
+log_cli = "True"
+markers = [
+  "slow: slow tests",
+  "kernel: test for triton kernel",
+  "experiment: experiment, mainly for checking shapes only",
+]
+minversion = "6.0"
+testpaths = "tests/"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: nocover",
+    "raise NotImplementedError",
+    "raise NotImplementedError()",
+    "if __name__ == .__main__.:",
+]

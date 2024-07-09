@@ -1,8 +1,9 @@
 import lovely_tensors as lt
 import torch
+from loguru import logger
+
 import triton
 import triton.language as tl
-from loguru import logger
 
 lt.monkey_patch()
 logger.add("debugging_triton.log", filter="triton", level="DEBUG")

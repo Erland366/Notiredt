@@ -1,24 +1,35 @@
 import torch
 import triton
+from torch import Tensor
 
 
 def element_wise_kernel_config(
     block_name: str = "BLOCK_SIZE",
 ) -> list[triton.Config]:
-    """Returns kernel configuration for element-wise operations.
+    """
+    Returns a list of Triton configurations for element-wise kernels.
 
     Args:
-        block_name (str, optional): Name of block arguments row are distributed over. Defaults to "BLOCK_SIZE".
+        block_name (str): The name of the block size parameter in the configuration.
 
     Returns:
-        list[triton.Config]
+        list[triton.Config]: A list of Triton configurations.
     """
+    # Define the configurations for different block sizes.
     return [
-        triton.Config({block_name: 64}, num_warps=2),
-        triton.Config({block_name: 128}, num_warps=2),
-        triton.Config({block_name: 256}, num_warps=4),
-        triton.Config({block_name: 512}, num_warps=4),
-        triton.Config({block_name: 1024}, num_warps=4),
+        triton.Config({block_name: 64}, num_warps=2),  # Block size = 64, num warps = 2
+        triton.Config(
+            {block_name: 128}, num_warps=2
+        ),  # Block size = 128, num warps = 2
+        triton.Config(
+            {block_name: 256}, num_warps=4
+        ),  # Block size = 256, num warps = 4
+        triton.Config(
+            {block_name: 512}, num_warps=4
+        ),  # Block size = 512, num warps = 4
+        triton.Config(
+            {block_name: 1024}, num_warps=4
+        ),  # Block size = 1024, num warps = 4
     ]
 
 
@@ -83,3 +94,51 @@ def warps_kernel_configs() -> list[triton.Config]:
 
     """
     return [triton.Config({}, num_warps=2**i) for i in range(6)]
+
+
+def is_valid(x: Tensor) -> Tensor:
+    """
+    Check if the input tensor is valid for GPU computations.
+
+    Args:
+        x (torch.Tensor): Input tensor.
+
+    Raises:
+        AssertionError: If the tensor is not on the GPU.
+        AssertionError: If the tensor is not contiguous.
+
+    Returns:
+        torch.Tensor: The input tensor.
+    """
+    # Check if the tensor is on the GPU
+    assert x.is_cuda, "Tensor is not in GPU, use `.to('cuda')` on this Tensor!"
+
+    # Check if the tensor is contiguous
+    assert (
+        x.is_contiguous()
+    ), "Tensor is not contiguous, use `.contiguous()` on this Tensor!"
+
+
+def set_seed(seed: int) -> None:
+    """
+    Set seed for all random number generators.
+
+    Args:
+        seed (int): Seed value.
+    """
+
+    # Set seed for Python's random module
+    import random
+
+    random.seed(seed)
+
+    # Set seed for PyTorch
+    import torch
+
+    torch.manual_seed(seed)
+    torch.use_deterministic_algorithms(True)
+
+    # Set seed for NumPy
+    import numpy as np
+
+    np.random.seed(seed)

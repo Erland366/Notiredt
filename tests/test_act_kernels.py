@@ -27,9 +27,12 @@ def test_sigmoid(
         notiredt_output = notiredt_act_func(notiredt_input)
         torch_output = torch_act_func(torch_input)
 
+    print(f"{notiredt_output = }")
+    print(f"{torch_output = }")
+
     assert_close((notiredt_output, torch_output), rtol=1e-3, atol=1e-3)
 
-    # notiredt_output.backward(create_input_like(notiredt_input))
-    # torch_output.backward(create_input_like(torch_input))
+    notiredt_output.backward(create_input_like(notiredt_input))
+    torch_output.backward(create_input_like(torch_input))
 
-    # assert_close((notiredt_input.grad, torch_input.grad), rtol=1e-3, atol=1e-3)
+    assert_close((notiredt_input.grad, torch_input.grad), rtol=1e-3, atol=1e-3)

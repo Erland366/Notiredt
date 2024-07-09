@@ -107,6 +107,24 @@ def assert_close(
         torch.testing.assert_close(*pair, rtol=rtol, atol=atol)
 
 
+def default_act_func(exclude: list[str] | None = None) -> list[str | None]:
+    """
+    Return the default activation function for layers.
+
+    Returns:
+        list[str | None]: A list containing the default activation function.
+            If the first element is None, the layer does not apply activation function.
+            Otherwise, the first element is the name of the activation function.
+    """
+    # The default activation function is None, meaning the layer does not apply activation function.
+    # If the first element is not None, the first element is the name of the activation function.
+    # Currently, the only supported activation function is "sigmoid".
+    all_act_func = [None, "sigmoid"]
+    if exclude is None:
+        exclude = []
+    return [act_func for act_func in all_act_func if act_func not in exclude]
+
+
 __all__ = [
     "assert_close",
     "create_input",
